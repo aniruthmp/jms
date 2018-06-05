@@ -7,13 +7,12 @@ import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessagePostProcessor;
-import org.springframework.jms.support.JmsHeaders;
 import org.springframework.stereotype.Service;
 
-import javax.jms.*;
-import java.util.HashMap;
-import java.util.Map;
+import javax.jms.DeliveryMode;
+import javax.jms.JMSException;
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
 import java.util.UUID;
 
 import static io.pivotal.jms.config.ActiveMQConfig.ORDER_QUEUE;
