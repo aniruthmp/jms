@@ -1,8 +1,8 @@
 package io.pivotal.jms.api;
 
-import io.pivotal.jms.config.ClientGateway;
 import io.pivotal.jms.model.Order;
 import io.pivotal.jms.model.Shipment;
+import io.pivotal.jms.sender.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class DemoController {
 
     @Autowired
-    private ClientGateway clientGateway;
+    private Producer producer;
 
     @GetMapping(value = "/send")
     public ResponseEntity<Shipment> send() throws JMSException {
@@ -29,7 +29,7 @@ public class DemoController {
                 UUID.randomUUID().toString(),
                 random.nextInt());
         log.info("--------- Sending {} ", order);
-        Shipment shipment = clientGateway.sendAndReceive(order);
+        Shipment shipment = producer.sendWithReply(order);
         log.info("--------- Received {} ", shipment);
 
         return new ResponseEntity<>(shipment, HttpStatus.OK);
